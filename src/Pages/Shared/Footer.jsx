@@ -141,7 +141,7 @@ const Footer = () => {
               <li className="flex items-center space-x-3">
                 <img src={email} alt="Email" />
                 <a
-                  href="https://hr-akash23.web.app"
+                  href="https://nrbnayon-ii.vercel.app"
                   className="text-gray-600 hover:text-[#8272ED] transition-colors"
                 >
                   simfrii.contact@gmail.com
@@ -150,7 +150,7 @@ const Footer = () => {
               <li className="flex items-center space-x-3">
                 <img src={call} alt="Call" />
                 <a
-                  href="https://hr-akash23.web.app"
+                  href="https://nrbnayon-ii.vercel.app"
                   className="text-gray-600 hover:text-[#8272ED] transition-colors"
                 >
                   91+585-656-658
@@ -169,7 +169,7 @@ const Footer = () => {
           }}
         >
           <div className="">
-            © 2025 <span className="text-[#aa6320]">Akash</span>. All rights
+            © 2025 <span className="text-[#aa6320]">Nayon</span>. All rights
             reserved.
           </div>
         </div>
