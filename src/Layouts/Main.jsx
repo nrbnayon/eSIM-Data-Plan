@@ -5,16 +5,16 @@ import ScrollToTop from "../components/ScrollToTop";
 
 const Main = () => {
   const location = useLocation();
-  const hideFooter = location.pathname === "/conversation";
+  const hideFooter = location.pathname === "/noFooter";
 
   return (
     <div className="">
       <Navbar />
-      <ScrollToTop/>
-      <div>
+      <ScrollToTop />
+      <div >
         <Outlet />
       </div>
-      {!hideFooter && <Footer />}
+      <div>{!hideFooter && <Footer />}</div>
     </div>
   );
 };

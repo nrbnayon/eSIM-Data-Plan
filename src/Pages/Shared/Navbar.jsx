@@ -33,7 +33,7 @@ const Navbar = () => {
             Home
           </Link>
           <Link
-            to="/"
+            to="/my-esim"
             className="text-gray-700 hover:text-orange-600 transition-colors duration-300 font-medium"
           >
             My eSIMs
