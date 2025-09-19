@@ -9,6 +9,7 @@ import CountryEsim from "../Pages/WorldWideESim/CountryEsim";
 import RegionOffers from "../Pages/HomePage/Regions/RegionOffers";
 import MyEsim from "../Pages/MyEsim/MyEsim";
 import ESIMDetails from "../Pages/MyEsim/ESIMDetails";
+import AccountSettings from "../Pages/AccountSettings/AccountSettings";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: "/package-details",
         element: <ESIMDetails />,
+      },
+      {
+        path: "/settings",
+        element: <AccountSettings />,
       },
     ],
   },

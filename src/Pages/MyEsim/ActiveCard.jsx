@@ -51,7 +51,7 @@ const ActiveCard = () => {
                   {offer?.company}
                 </h2>
               </div>
-              <div className="bg-gradient-to-r from-orange-400 to-orange-500 text-white px-4 py-1.5 rounded-full text-sm font-medium">
+              <div className="bg-gradient-to-b from-[#FFA943] to-[#E97400] text-white px-4 py-1.5 rounded-full text-sm font-medium">
                 ON SALE
               </div>
             </div>
@@ -119,7 +119,7 @@ const ActiveCard = () => {
               <Link className="w-full border text-center border-orange-400 bg-white hover:scale-105 font-semibold py-2 px-6 rounded-full text-lg shadow-lg transition-transform duration-300 cursor-pointer">
                 Top Up
               </Link>
-              <Link to='/package-details' className="w-full bg-gradient-to-r text-center from-orange-400 to-orange-500 hover:scale-105 text-white font-semibold py-2 px-6 rounded-full text-lg transition-transform duration-300 shadow-lg cursor-pointer">
+              <Link to='/package-details' className="w-full text-center bg-gradient-to-b from-[#FFA943] to-[#E97400] hover:scale-105 text-white font-semibold py-2 px-6 rounded-full text-lg transition-transform duration-300 shadow-lg cursor-pointer">
                 Details
               </Link>
             </div>

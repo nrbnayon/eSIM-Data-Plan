@@ -4,6 +4,9 @@ import {
   ChevronRight,
   MoreVertical,
   FileText,
+  Trash2,
+  CircleFadingArrowUpIcon,
+  HeadphonesIcon,
 } from "lucide-react";
 
 export default function ESIMDetails() {
@@ -15,15 +18,15 @@ export default function ESIMDetails() {
     iccidNum: "846421321645",
     daysRemaining: 30,
   });
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isConfirmDeleteOpen, setIsConfirmDeleteOpen] = useState(false);
 
   // Simulate data loading
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
-      // Simulate API call delay
       await new Promise((resolve) => setTimeout(resolve, 300));
 
-      // Simulate different data scenarios
       const scenarios = [
         {
           usedData: 0.5,
@@ -67,8 +70,9 @@ export default function ESIMDetails() {
   // Calculate percentage for semicircular progress
   const usagePercentage = (data.usedData / data.totalData) * 100;
   const radius = 40;
-  const circumference = Math.PI * radius; // Half circle circumference (180 degrees)
-  const strokeDashoffset = circumference - (usagePercentage / 100) * circumference;
+  const circumference = Math.PI * radius;
+  const strokeDashoffset =
+    circumference - (usagePercentage / 100) * circumference;
 
   // Format data display
   const formatData = (value) => {
@@ -77,25 +81,21 @@ export default function ESIMDetails() {
       : `${value.toFixed(1)}GB`;
   };
 
-  // Reload data function
-  const handleReload = () => {
-    const scenarios = [
-      {
-        usedData: 0.3,
-        totalData: 2,
-        coverage: 137,
-        iccidNum: "846421321645",
-        daysRemaining: 29,
-      },
-    ];
-
-    setTimeout(() => {
-      const randomScenario =
-        scenarios[Math.floor(Math.random() * scenarios.length)];
-      setData(randomScenario);
-      setLoading(false);
-    }, 1500);
+  // Handle delete confirmation
+  const handleDeleteConfirm = () => {
+    setIsConfirmDeleteOpen(false);
+    // Simulate deletion by resetting data to initial state
+    setData({
+      usedData: 0,
+      totalData: 2,
+      coverage: 137,
+      iccidNum: "846421321645",
+      daysRemaining: 30,
+    });
+    setIsModalOpen(false); // Close the modal after deletion
   };
+
+  
 
   return (
     <div className="min-h-screen container mx-auto p-4 mt-24">
@@ -105,7 +105,7 @@ export default function ESIMDetails() {
           <ChevronLeft className="w-6 h-6 text-gray-600 mr-2" />
           <h1 className="text-xl font-semibold text-gray-900">Details</h1>
         </div>
-        <button onClick={handleReload}>
+        <button onClick={() => setIsModalOpen(true)}>
           <MoreVertical className="w-6 h-6 text-gray-600" />
         </button>
       </div>
@@ -120,10 +120,7 @@ export default function ESIMDetails() {
 
             {/* Semicircular Progress */}
             <div className="relative w-96 h-48 mx-auto mb-4">
-              <svg
-                className="w-96 h-48"
-                viewBox="0 0 100 50" // Adjusted viewBox for half circle
-              >
+              <svg className="w-96 h-48" viewBox="0 0 100 50">
                 {/* Background semicircle */}
                 <path
                   d="M 10 50 A 40 40 0 0 1 90 50"
@@ -137,7 +134,7 @@ export default function ESIMDetails() {
                   stroke="#fb923c"
                   strokeWidth="5"
                   fill="none"
-                  strokeLinecap="round" // Ensures rounded endpoints
+                  strokeLinecap="round"
                   strokeDasharray={circumference}
                   strokeDashoffset={strokeDashoffset}
                   className="transition-all duration-1000 ease-out"
@@ -228,6 +225,75 @@ export default function ESIMDetails() {
           </div>
         </div>
       </div>
+
+      {/* Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 min-w-md shadow-lg">
+            <div className="space-y-3">
+              <h2 className="text-sm text-center mb-7">
+                What do you like to do with your eSIM?
+              </h2>
+
+              <div className="flex items-center gap-3">
+                <CircleFadingArrowUpIcon />
+                <div>
+                  <h3 className="text-sm font-medium">Archive</h3>
+                  <p className="text-xs">Saved for later</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <HeadphonesIcon />
+                <div>
+                  <h3 className="text-sm font-medium">Get Support</h3>
+                  <p className="text-xs">Contact customer service</p>
+                </div>
+              </div>
+              <button
+                onClick={() => {
+                  setIsModalOpen(false);
+                  setIsConfirmDeleteOpen(true);
+                }}
+                className="flex items-center text-red-500 text-left gap-3"
+              >
+                <Trash2 />
+                <div>
+                  <h3 className="text-sm font-medium">Deactivate ESIM</h3>
+                  <p className="text-xs">Remove from device</p>
+                </div>
+              </button>
+            </div>
+
+            <button onClick={() => setIsModalOpen(false)} className="text-center p-2 bg-black text-white w-full rounded-full mt-5">
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Confirm Delete Modal */}
+      {isConfirmDeleteOpen && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 min-w-md shadow-lg text-center">
+            <h2 className="text-lg font-semibold mb-4">Confirm Delete</h2>
+            <p className="mb-6">Are you sure you want to delete this eSIM?</p>
+            <div className="flex justify-center gap-4">
+              <button
+                onClick={() => setIsConfirmDeleteOpen(false)}
+                className="py-2 px-4 bg-gray-200 rounded-md hover:bg-gray-300"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleDeleteConfirm}
+                className="py-2 px-4 bg-red-600 text-white rounded-md hover:bg-red-700"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

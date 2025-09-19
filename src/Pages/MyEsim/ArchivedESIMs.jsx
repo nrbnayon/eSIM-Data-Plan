@@ -76,7 +76,7 @@ const ArchivedESIMs = () => {
                   {offer?.company}
                 </h2>
               </div>
-              <div className="bg-gradient-to-r from-orange-400 to-orange-500 text-white px-4 py-1.5 rounded-full text-sm font-medium">
+              <div className="saleBadge">
                 ON SALE
               </div>
             </div>
@@ -162,7 +162,7 @@ const ArchivedESIMs = () => {
             </div>
 
             {/* Buy now button */}
-            <button className="w-full bg-gradient-to-r from-orange-400 to-orange-500 hover:scale-105 text-white font-semibold py-2 px-6 rounded-full text-lg mt-8 transition-transform duration-300 shadow-lg cursor-pointer">
+            <button className="btn-primary">
               Buy now
             </button>
           </div>
