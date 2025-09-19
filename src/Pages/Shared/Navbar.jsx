@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import SupportModal from "../Support/supportModal";
 import ChatModal from "../Support/ChatModal";
+import SupportModal from "../Support/SupportModal";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
