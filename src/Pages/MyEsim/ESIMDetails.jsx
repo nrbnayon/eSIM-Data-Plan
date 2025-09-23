@@ -8,6 +8,9 @@ import {
   CircleFadingArrowUpIcon,
   HeadphonesIcon,
 } from "lucide-react";
+import SupportModal from "../Support/SupportModal";
+import ChatModal from "../Support/ChatModal";
+import { Link } from "react-router-dom";
 
 export default function ESIMDetails() {
   const [loading, setLoading] = useState(true);
@@ -20,6 +23,31 @@ export default function ESIMDetails() {
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isConfirmDeleteOpen, setIsConfirmDeleteOpen] = useState(false);
+   const [isOpen, setIsOpen] = useState(false);
+  const [chatOpen, setChatOpen] = useState(false);
+  const [supportOpen, setSupportOpen] = useState(false);
+
+  const closeSupport = () => setSupportOpen(false);
+  const openChat = () => {
+    closeSupport();
+    setChatOpen(true);
+  };
+  const closeChat = () => setChatOpen(false);
+
+  const handleMenuItemClick = () => {
+    setTimeout(() => {
+      setIsOpen(false);
+    }, 200);
+  };
+
+  const handleSupportClick = (e) => {
+    setIsModalOpen(false)
+    e.preventDefault();
+    setSupportOpen(true);
+    if (isOpen) {
+      setIsOpen(false);
+    }
+  };
 
   // Simulate data loading
   useEffect(() => {
@@ -211,7 +239,7 @@ export default function ESIMDetails() {
               eSIMs Installation
             </h3>
 
-            <div className="bg-orange-50 rounded-xl p-4 flex items-center justify-between hover:bg-orange-100 transition-colors cursor-pointer">
+            <Link to='/instruction' className="bg-orange-50 rounded-xl p-4 flex items-center justify-between hover:bg-orange-100 transition-colors cursor-pointer">
               <div className="flex items-center">
                 <div className="bg-white rounded-lg p-2 mr-3">
                   <FileText className="w-5 h-5 text-gray-600" />
@@ -221,7 +249,7 @@ export default function ESIMDetails() {
                 </span>
               </div>
               <ChevronRight className="w-5 h-5 text-gray-400" />
-            </div>
+            </Link>
           </div>
         </div>
       </div>
@@ -235,26 +263,29 @@ export default function ESIMDetails() {
                 What do you like to do with your eSIM?
               </h2>
 
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 cursor-pointer">
                 <CircleFadingArrowUpIcon />
                 <div>
                   <h3 className="text-sm font-medium">Archive</h3>
                   <p className="text-xs">Saved for later</p>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
+              <a onClick={(e) => {
+              handleSupportClick(e);
+              handleMenuItemClick();
+            }} className="flex items-center gap-3 cursor-pointer">
                 <HeadphonesIcon />
                 <div>
                   <h3 className="text-sm font-medium">Get Support</h3>
                   <p className="text-xs">Contact customer service</p>
                 </div>
-              </div>
+              </a>
               <button
                 onClick={() => {
                   setIsModalOpen(false);
                   setIsConfirmDeleteOpen(true);
                 }}
-                className="flex items-center text-red-500 text-left gap-3"
+                className="flex items-center text-red-500 text-left gap-3 cursor-pointer"
               >
                 <Trash2 />
                 <div>
@@ -271,12 +302,12 @@ export default function ESIMDetails() {
         </div>
       )}
 
-      {/* Confirm Delete Modal */}
+      {/* Confirm Deactivate Modal */}
       {isConfirmDeleteOpen && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 min-w-md shadow-lg text-center">
-            <h2 className="text-lg font-semibold mb-4">Confirm Delete</h2>
-            <p className="mb-6">Are you sure you want to delete this eSIM?</p>
+            <h2 className="text-lg font-semibold mb-4">Confirm Deactivate</h2>
+            <p className="mb-6">Are you sure you want to Deactivate this eSIM?</p>
             <div className="flex justify-center gap-4">
               <button
                 onClick={() => setIsConfirmDeleteOpen(false)}
@@ -288,12 +319,16 @@ export default function ESIMDetails() {
                 onClick={handleDeleteConfirm}
                 className="py-2 px-4 bg-red-600 text-white rounded-md hover:bg-red-700"
               >
-                Delete
+                Deactivate
               </button>
             </div>
           </div>
         </div>
       )}
+
+      {/* Shared Modal */}
+      <SupportModal isOpen={supportOpen} onClose={closeSupport} openChat={openChat} />
+      <ChatModal isOpen={chatOpen} onClose={closeChat} />
     </div>
   );
 }

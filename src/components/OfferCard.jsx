@@ -11,6 +11,7 @@ const OfferCard = ({
   bgColor,
   button,
   saleBadge,
+  onBuy,
 }) => {
   return (
     <div
@@ -79,7 +80,9 @@ const OfferCard = ({
       </div>
 
       {/* Buy now button */}
-      <button className={`${button}`}>Buy now</button>
+      <button onClick={onBuy} className={`${button}`}>
+        Buy now
+      </button>
     </div>
   );
 };

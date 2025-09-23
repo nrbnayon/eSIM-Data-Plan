@@ -11,7 +11,7 @@ const Main = () => {
     <div className="">
       <Navbar />
       <ScrollToTop />
-      <div >
+      <div className="min-h-[calc(100vh-26rem)]">
         <Outlet />
       </div>
       <div>{!hideFooter && <Footer />}</div>
@@ -20,4 +20,4 @@ const Main = () => {
 };
 
 export default Main;
-//  className="container mx-auto mt-30 md:mt-15"
+

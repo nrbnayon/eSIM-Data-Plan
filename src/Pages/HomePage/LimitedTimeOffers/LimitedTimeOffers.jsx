@@ -1,6 +1,8 @@
+import { useNavigate } from "react-router-dom";
 import OfferCard from '../../../components/OfferCard';
 
 const LimitedTimeOffers = () => {
+  const navigate = useNavigate();
   const offers = [
     {
       company: "Airalo",
@@ -52,6 +54,10 @@ const LimitedTimeOffers = () => {
     },
   ];
 
+  const handleBuy = (id) => {
+    navigate(`/order-preview/${id}`);
+  };
+
   return (
     <div className="my-10">
       <h1 className="text-3xl font-medium mb-4">Limited Time Offers</h1>
@@ -69,6 +75,7 @@ const LimitedTimeOffers = () => {
             bgColor="bg-[#ffffff]"
             button="btn-primary"
             saleBadge="saleBadge"
+            onBuy={() => handleBuy(index)}
           />
         ))}
       </div>

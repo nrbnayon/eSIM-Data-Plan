@@ -1,27 +1,83 @@
-import { Wallet, DollarSign } from "lucide-react";
+import { useState } from "react";
+import SupportModal from "../Support/SupportModal";
+import ChatModal from "../Support/ChatModal";
+import TroubleshootingModal from "../../components/TroubleshootingModal";
+import FAQModal from "../../components/FAQModal";
 
 export default function Help() {
+  const [supportOpen, setSupportOpen] = useState(false);
+  const [chatOpen, setChatOpen] = useState(false);
+  const [troubleshootingOpen, setTroubleshootingOpen] = useState(false);
+  const [FaqModal, setFaqModal] = useState(false);
+
+  // Open Support modal
+  const openSupport = () => setSupportOpen(true);
+
+  // Close Support modal
+  const closeSupport = () => setSupportOpen(false);
+
+  // Open Chat modal and close Support modal
+  const openChat = () => {
+    closeSupport();
+    setChatOpen(true);
+  };
+
+  // Close Chat modal
+  const closeChat = () => setChatOpen(false);
+
+  // Open Troubleshooting modal
+  const openTroubleshooting = () => setTroubleshootingOpen(true);
+
+  // Close Troubleshooting modal
+  const closeTroubleshooting = () => setTroubleshootingOpen(false);
+
+  // Open FAQ modal
+  const openFAQ = () => setFaqModal(true);
+
+  // Close FAQ modal
+  const closeFAQ = () => setFaqModal(false);
+
   return (
     <div className="">
-      <div className="bg-white rounded-lg shadow-xl p-4 w-96">
-        <div className="mb-4 p-3 rounded-lg bg-gray-100">
-          <div className="flex items-center mb-2 gap-2">
-            <Wallet />
-            <h2 className="text-lg font-semibold">Available Balance</h2>
-          </div>
-          <p className="text-2xl font-bold">$2,788 USD</p>
-        </div>
-        <div className="mb-6 p-3 rounded-lg bg-gray-100">
-          <div className="flex items-center mb-2 gap-2">
-            <DollarSign />
-            <h2 className="text-lg font-semibold">Total Income (This Month)</h2>
-          </div>
-          <p className="text-2xl font-bold">$2,788 USD</p>
-        </div>
-        <button className="w-full bg-[#171135] text-white py-3 rounded-lg font-semibold hover:bg-[#121135] cursor-pointer">
-          Withdraw
-        </button>
+      <div className="">
+        <h1
+          className="border-b border-gray-200 py-2 cursor-pointer hover:bg-gray-100"
+          onClick={openFAQ}
+        >
+          FAQ
+        </h1>
+        <h1
+          className="border-b border-gray-200 py-2 cursor-pointer hover:bg-gray-100"
+          onClick={openTroubleshooting}
+        >
+          Troubleshooting
+        </h1>
+        <h1
+          className="border-b border-gray-200 py-2 cursor-pointer hover:bg-gray-100"
+          onClick={openSupport}
+        >
+          Support
+        </h1>
       </div>
+
+      {/* FAQ Modal */}
+      <FAQModal isOpen={FaqModal} onClose={closeFAQ} />
+
+      {/* Troubleshooting Modal */}
+      <TroubleshootingModal
+        isOpen={troubleshootingOpen}
+        onClose={closeTroubleshooting}
+      />
+
+      {/* Support Modal */}
+      <SupportModal
+        isOpen={supportOpen}
+        onClose={closeSupport}
+        openChat={openChat}
+      />
+
+      {/* Chat Modal */}
+      <ChatModal isOpen={chatOpen} onClose={closeChat} />
     </div>
   );
 }

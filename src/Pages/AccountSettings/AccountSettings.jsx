@@ -1,15 +1,17 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { LogOut } from "lucide-react";
 import AccountInformation from "./AccountInformation";
 import Notifications from "./Notifications";
 import PrivacyPolicy from "./PrivacyPolicy";
 import Language from "./Language";
 import Help from "./Help";
+import LogoutModal from "../../components/LogoutModal";
 
 export default function AccountSettings() {
-  const navigate = useNavigate();
-  const [activeSection, setActiveSection] = useState("Account Information");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initialSection = searchParams.get("section") || "Account Information";
+  const [activeSection, setActiveSection] = useState(initialSection);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   const menuItems = [
@@ -21,17 +23,18 @@ export default function AccountSettings() {
     "Log Out",
   ];
 
+  useEffect(() => {
+    if (activeSection && activeSection !== "Log Out") {
+      setSearchParams({ section: activeSection });
+    }
+  }, [activeSection, setSearchParams]);
+
   const handleMenuClick = (item) => {
     if (item === "Log Out") {
       setShowLogoutModal(true);
     } else {
       setActiveSection(item);
     }
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem("userRole");
-    navigate("/signin");
   };
 
   const renderContent = () => {
@@ -55,7 +58,6 @@ export default function AccountSettings() {
     <div className="min-h-screen container mx-auto mt-30 md:mt-24">
       <div className="px-4 py-8">
         <div className="grid lg:grid-cols-4 gap-8">
-          {/* Sidebar */}
           <div className="lg:col-span-1">
             <nav className="space-y-2">
               <div className="text-center flex flex-col justify-center items-center mb-8">
@@ -87,8 +89,6 @@ export default function AccountSettings() {
               ))}
             </nav>
           </div>
-
-          {/* Main Content */}
           <div className="lg:col-span-3">
             <div className="bg-white p-8 border-l border-gray-100">
               <h2 className="text-xl font-semibold text-gray-800 mb-8">
@@ -99,37 +99,7 @@ export default function AccountSettings() {
           </div>
         </div>
       </div>
-      {/* Logout Modal */}
-      {showLogoutModal && (
-        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 max-w-sm w-full mx-4">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">
-              Log Out
-            </h3>
-            <p className="text-gray-600 mb-6">
-              Are you sure you want to log out?
-            </p>
-            <div className="flex space-x-4">
-              <button
-                onClick={() => setShowLogoutModal(false)}
-                className="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors duration-300"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={() => {
-                  handleLogout();
-                  setShowLogoutModal(false);
-                  // Handle logout logic here
-                }}
-                className="flex-1 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition-colors duration-300"
-              >
-                Log Out
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <LogoutModal isOpen={showLogoutModal} onClose={() => setShowLogoutModal(false)} />
     </div>
   );
 }

@@ -8,8 +8,10 @@ import {
   Smartphone,
 } from "lucide-react";
 import OfferCard from "../../components/OfferCard";
+import { useNavigate } from "react-router-dom";
 
 const ArchivedESIMs = () => {
+  const navigate = useNavigate();
   const offers = [
     {
       company: "RoamFree",
@@ -42,6 +44,9 @@ const ArchivedESIMs = () => {
       discountedPrice: 75.0,
     },
   ];
+  const handleBuy = (id) => {
+    navigate(`/order-preview/${id}`);
+  };
   return (
     <div className="my-10 ">
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-10">
@@ -57,6 +62,7 @@ const ArchivedESIMs = () => {
             bgColor="bg-[#FFF6ED]"
             button="btn-primary"
             saleBadge="saleBadge"
+            onBuy={() => handleBuy(index)}
           />
         ))}
         </div>

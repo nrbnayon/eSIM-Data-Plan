@@ -149,7 +149,7 @@ const PendingCard = () => {
             </div>
 
             <div className="flex gap-5 mt-7">
-              <Link className="w-full border text-center border-orange-400 bg-white hover:scale-105 font-semibold py-2 px-6 rounded-full text-lg shadow-lg transition-transform duration-300 cursor-pointer">
+              <Link to={`/top-up/${offer.index}`} className="w-full border text-center border-orange-400 bg-white hover:scale-105 font-semibold py-2 px-6 rounded-full text-lg shadow-lg transition-transform duration-300 cursor-pointer">
                 Top Up
               </Link>
               <Link className="w-full text-center bg-gradient-to-b from-[#FFA943] to-[#E97400] hover:scale-105 text-white font-semibold py-2 px-6 rounded-full text-lg transition-transform duration-300 shadow-lg cursor-pointer">

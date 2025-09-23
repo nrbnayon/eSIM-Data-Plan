@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import OfferCard from "../../components/OfferCard";
@@ -6,6 +6,7 @@ import useModal from "../../components/modal/useModal";
 import filter from "../../assets/icons/filter.svg";
 
 const CountryEsim = () => {
+  const navigate = useNavigate();
   const { countryName } = useParams();
   const [currentPage, setCurrentPage] = useState(1);
   const [priceRange, setPriceRange] = useState({ min: 0, max: 100 });
@@ -209,6 +210,10 @@ const CountryEsim = () => {
     closeModal();
   };
 
+  const handleBuy = (id) => {
+    navigate(`/order-preview/${id}`);
+  };
+
   return (
     <div className="my-10 container mx-auto px-4 py-16">
       <div className="flex items-center justify-between mb-10">
@@ -237,6 +242,7 @@ const CountryEsim = () => {
               bgColor="bg-[#FFFFFF]"
               button="btn-primary"
               saleBadge="saleBadge"
+              onBuy={() => handleBuy(index)}
             />
           ))
         ) : (

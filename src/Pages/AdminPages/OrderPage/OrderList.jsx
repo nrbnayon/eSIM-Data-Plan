@@ -11,14 +11,14 @@ import SectionTitle from "../../../components/SectionTitle";
 const OrderList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-  const itemsPerPage = 5;
+  const itemsPerPage = 7;
 
   const orders = [
     {
       id: "ORD-AX93K7",
       eventName: "Catering",
       date: "Jan 6, 2025",
-      location: "Overland Park, KS",
+      plan: "Asia 7 days",
       seller: "Phoenix Baker",
       buyer: "Andi Lane",
       price: "$2,000",
@@ -28,7 +28,7 @@ const OrderList = () => {
       id: "ORD-AX93K7",
       eventName: "Wedding photography expert in chicago",
       date: "Jan 6, 2025",
-      location: "Overland Park, KS",
+      plan: "Asia 7 days",
       seller: "Drew Cano",
       buyer: "Kate Morrison",
       price: "$3,500",
@@ -38,7 +38,7 @@ const OrderList = () => {
       id: "ORD-AX93K7",
       eventName: "Dj",
       date: "Jan 6, 2025",
-      location: "Overland Park, KS",
+      plan: "Asia 7 days",
       seller: "Phoenix Baker",
       buyer: "Andi Lane",
       price: "$1,800",
@@ -48,7 +48,7 @@ const OrderList = () => {
       id: "ORD-AX93K7",
       eventName: "Catering",
       date: "Jan 6, 2025",
-      location: "Overland Park, KS",
+      plan: "Asia 7 days",
       seller: "Drew Cano",
       buyer: "Kate Morrison",
       price: "$2,000",
@@ -58,7 +58,7 @@ const OrderList = () => {
       id: "ORD-AX93K7",
       eventName: "Wedding photography expert in chicago",
       date: "Jan 6, 2025",
-      location: "Overland Park, KS",
+      plan: "Asia 7 days",
       seller: "Phoenix Baker",
       buyer: "Andi Lane",
       price: "$3,500",
@@ -68,7 +68,7 @@ const OrderList = () => {
       id: "ORD-AX93K7",
       eventName: "Dj",
       date: "Jan 6, 2025",
-      location: "Overland Park, KS",
+      plan: "Asia 7 days",
       seller: "Drew Cano",
       buyer: "Kate Morrison",
       price: "$1,800",
@@ -78,7 +78,27 @@ const OrderList = () => {
       id: "ORD-AX93K7",
       eventName: "Catering",
       date: "Jan 6, 2025",
-      location: "Overland Park, KS",
+      plan: "Asia 7 days",
+      seller: "Phoenix Baker",
+      buyer: "Andi Lane",
+      price: "$2,000",
+      status: "Active",
+    },
+    {
+      id: "ORD-AX93ssa",
+      eventName: "Catering",
+      date: "Jan 6, 2025",
+      plan: "Asia 7 days",
+      seller: "Phoenix Baker",
+      buyer: "Andi Lane",
+      price: "$2,000",
+      status: "Active",
+    },
+    {
+      id: "ORD-AX93sas",
+      eventName: "Catering",
+      date: "Jan 6, 2025",
+      plan: "Asia 7 days",
       seller: "Phoenix Baker",
       buyer: "Andi Lane",
       price: "$2,000",
@@ -86,24 +106,32 @@ const OrderList = () => {
     },
   ];
 
+  // Dynamic stats based on orders
+  const totalOrders = orders.length;
+  const activeOrders = orders.filter(
+    (order) => order.status === "Active"
+  ).length;
+  const canceledOrders = orders.filter(
+    (order) => order.status === "Canceled"
+  ).length;
   const stats = [
     {
       title: "Total Orders",
-      value: "220",
+      value: totalOrders,
       change: "40%",
       changeType: "increase",
       comparison: "vs last month",
     },
     {
       title: "Active Orders",
-      value: "316",
+      value: activeOrders,
       change: "20%",
       changeType: "decrease",
       comparison: "vs last month",
     },
     {
       title: "Total Cancel",
-      value: "420",
+      value: canceledOrders,
       change: "20%",
       changeType: "decrease",
       comparison: "From last month",
@@ -112,32 +140,38 @@ const OrderList = () => {
 
   const filteredOrders = orders.filter(
     (order) =>
-      order.eventName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      order.seller.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      order.buyer.toLowerCase().includes(searchQuery.toLowerCase())
+      !searchQuery ||
+      [order.eventName, order.seller, order.buyer].some((field) =>
+        field.toLowerCase().includes(searchQuery.toLowerCase())
+      )
   );
 
   const totalPages = Math.ceil(filteredOrders.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const currentOrders = filteredOrders.slice(startIndex, endIndex);
+  const currentOrders = filteredOrders.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+    setCurrentPage(1);
+  };
 
   const handlePageChange = (page) => setCurrentPage(page);
   const handlePreviousPage = () =>
     setCurrentPage((prev) => (prev > 1 ? prev - 1 : prev));
   const handleNextPage = () =>
     setCurrentPage((prev) => (prev < totalPages ? prev + 1 : prev));
-  const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value);
-    setCurrentPage(1);
-  };
 
   const renderPaginationButtons = () => {
     const buttons = [];
     const maxVisiblePages = 5;
+    const start = Math.max(2, currentPage - 1);
+    const end = Math.min(totalPages - 1, currentPage + 1);
 
     if (totalPages <= maxVisiblePages) {
-      for (let i = 1; i <= totalPages; i++) {
+      for (let i = 1; i <= totalPages; i++)
         buttons.push(
           <button
             key={i}
@@ -151,7 +185,6 @@ const OrderList = () => {
             {i}
           </button>
         );
-      }
     } else {
       buttons.push(
         <button
@@ -166,20 +199,14 @@ const OrderList = () => {
           1
         </button>
       );
-
-      if (currentPage > 3) {
+      if (currentPage > 3)
         buttons.push(
           <span key="ellipsis1" className="text-gray-500 mx-1">
             ...
           </span>
         );
-      }
-
-      const start = Math.max(2, currentPage - 1);
-      const end = Math.min(totalPages - 1, currentPage + 1);
-
-      for (let i = start; i <= end; i++) {
-        if (i !== 1 && i !== totalPages) {
+      for (let i = start; i <= end; i++)
+        if (i !== 1 && i !== totalPages)
           buttons.push(
             <button
               key={i}
@@ -193,18 +220,13 @@ const OrderList = () => {
               {i}
             </button>
           );
-        }
-      }
-
-      if (currentPage < totalPages - 2) {
+      if (currentPage < totalPages - 2)
         buttons.push(
           <span key="ellipsis2" className="text-gray-500 mx-1">
             ...
           </span>
         );
-      }
-
-      if (totalPages > 1) {
+      if (totalPages > 1)
         buttons.push(
           <button
             key={totalPages}
@@ -218,9 +240,7 @@ const OrderList = () => {
             {totalPages}
           </button>
         );
-      }
     }
-
     return buttons;
   };
 
@@ -230,11 +250,11 @@ const OrderList = () => {
         title={"Order List"}
         description={"Track, manage and forecast your customers and orders."}
       />
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-5">
         {stats.map((stat, index) => (
           <div
             key={index}
-            className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200"
+            className="bg-white p-4 rounded-2xl shadow-sm border border-gray-200"
           >
             <h3 className="text-sm font-medium text-gray-600">{stat.title}</h3>
             <p className="text-2xl font-semibold text-gray-900 mt-2">
@@ -264,26 +284,24 @@ const OrderList = () => {
       </div>
 
       <div className="bg-white rounded-2xl shadow-sm border border-gray-200">
-        <div className="p-6">
+        <div className="p-4">
           <input
             type="text"
             placeholder="Search"
             value={searchQuery}
             onChange={handleSearchChange}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="w-full p-3 border border-gray-300 rounded-lg outline-none "
           />
         </div>
-
+        <p className="text-sm text-gray-600 p-4">Showing {`${currentOrders.length} of ${filteredOrders.length} orders`}</p>
         <div className="overflow-x-auto">
           <table className="min-w-full">
             <thead className="bg-gray-50">
               <tr className="text-left text-gray-600 uppercase text-sm font-bold">
                 <th className="py-3 px-4">ID</th>
-                <th className="py-3 px-4">Event Name</th>
+                <th className="py-3 px-4">Customer</th>
+                <th className="py-3 px-4">Plan</th>
                 <th className="py-3 px-4">Date</th>
-                <th className="py-3 px-4">Location</th>
-                <th className="py-3 px-4">Seller</th>
-                <th className="py-3 px-4">Buyer</th>
                 <th className="py-3 px-4">Price</th>
                 <th className="py-3 px-4">Status</th>
               </tr>
@@ -295,16 +313,14 @@ const OrderList = () => {
                     key={order.id}
                     className="border-b border-gray-200 hover:bg-gray-50"
                   >
-                    <td className="p-4 text-gray-700">{order.id}</td>
                     <td className="p-4 text-gray-700">
                       <Link to={`/admin/order-details/${order.id}`}>
-                        {order.eventName}
+                        {order.id}
                       </Link>
                     </td>
-                    <td className="p-4 text-gray-700">{order.date}</td>
-                    <td className="p-4 text-gray-700">{order.location}</td>
                     <td className="p-4 text-gray-700">{order.seller}</td>
-                    <td className="p-4 text-gray-700">{order.buyer}</td>
+                    <td className="p-4 text-gray-700">{order.plan}</td>
+                    <td className="p-4 text-gray-700">{order.date}</td>
                     <td className="p-4 text-gray-700">{order.price}</td>
                     <td className="p-4">
                       <span
@@ -337,37 +353,35 @@ const OrderList = () => {
           </table>
         </div>
 
-        {totalPages > 1 && (
-          <div className="p-6 flex items-center justify-between">
-            <button
-              onClick={handlePreviousPage}
-              disabled={currentPage === 1}
-              className={`flex items-center px-4 py-2 text-sm rounded-md ${
-                currentPage === 1
-                  ? "text-gray-400 cursor-not-allowed"
-                  : "text-gray-700 hover:bg-gray-100"
-              }`}
-            >
-              <ChevronLeft className="w-4 h-4 mr-2" />
-              Previous
-            </button>
-
-            <div className="flex space-x-2">{renderPaginationButtons()}</div>
-
-            <button
-              onClick={handleNextPage}
-              disabled={currentPage === totalPages}
-              className={`flex items-center px-4 py-2 text-sm rounded-md ${
-                currentPage === totalPages
-                  ? "text-gray-400 cursor-not-allowed"
-                  : "text-gray-700 hover:bg-gray-100"
-              }`}
-            >
-              Next
-              <ChevronRight className="w-4 h-4 ml-2" />
-            </button>
-          </div>
-        )}
+        <div className="p-4">
+          {totalPages > 1 && (
+            <div className="flex items-center justify-between">
+              <button
+                onClick={handlePreviousPage}
+                disabled={currentPage === 1}
+                className={`flex items-center px-4 py-2 text-sm rounded-md ${
+                  currentPage === 1
+                    ? "text-gray-400 cursor-not-allowed"
+                    : "text-gray-700 hover:bg-gray-100"
+                }`}
+              >
+                <ChevronLeft className="w-4 h-4 mr-2" /> Previous
+              </button>
+              <div className="flex space-x-2">{renderPaginationButtons()}</div>
+              <button
+                onClick={handleNextPage}
+                disabled={currentPage === totalPages}
+                className={`flex items-center px-4 py-2 text-sm rounded-md ${
+                  currentPage === totalPages
+                    ? "text-gray-400 cursor-not-allowed"
+                    : "text-gray-700 hover:bg-gray-100"
+                }`}
+              >
+                Next <ChevronRight className="w-4 h-4 ml-2" />
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

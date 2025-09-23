@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import ChatModal from "../Support/ChatModal";
 import SupportModal from "../Support/SupportModal";
+import ChatModal from "../Support/ChatModal";
+import LogoutModal from "../../components/LogoutModal";
+import SwitchLanguage from "../CurrencyAndLanguage/SwitchLanguage";
+import Currency from "../CurrencyAndLanguage/Currency";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -9,9 +12,17 @@ const Navbar = () => {
   const [chatOpen, setChatOpen] = useState(false);
   const [supportOpen, setSupportOpen] = useState(false);
   const userImage =
-    "https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg";
+    "https://www.logoai.com/uploads/resources/2023/06/19/fa7fe9edacbfae0e5ad69f061d0153b8.jpeg";
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [languageModalOpen, setLanguageModalOpen] = useState(false);
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
+
+  const tabs = [
+    { label: "Language", value: "language", content: <SwitchLanguage/> },
+    { label: "Currency", value: "currency", content: <Currency/> },
+  ];
+
+  const [activeTab, setActiveTab] = useState("language");
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -28,7 +39,7 @@ const Navbar = () => {
   const handleMenuItemClick = () => {
     setTimeout(() => {
       setIsOpen(false);
-    }, 200); // Delay for smooth closing
+    }, 200);
   };
 
   const handleSupportClick = (e) => {
@@ -43,8 +54,11 @@ const Navbar = () => {
     setDropdownOpen(!dropdownOpen);
   };
 
-  const handleDropdownOptionClick = () => {
+  const handleDropdownOptionClick = (option) => {
     setDropdownOpen(false);
+    if (option === "Logout") {
+      setShowLogoutModal(true);
+    }
   };
 
   const toggleLanguageModal = () => {
@@ -115,20 +129,28 @@ const Navbar = () => {
               <img
                 src={userImage || "https://via.placeholder.com/40"}
                 alt="User"
-                className="w-10 h-10 rounded-full border-2 border-gray-400 cursor-pointer"
+                className="w-10 h-10 rounded-full border-2 border-orange-400 cursor-pointer"
                 onClick={toggleDropdown}
               />
               {dropdownOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-50">
-                  <Link to='/settings'
-                    onClick={handleDropdownOptionClick}
+                  <Link
+                    to="/dashboard"
+                    onClick={() => handleDropdownOptionClick("Settings")}
+                    className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                  >
+                    Dashboard
+                  </Link>
+                  <Link
+                    to="/settings"
+                    onClick={() => handleDropdownOptionClick("Settings")}
                     className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                   >
                     Settings
                   </Link>
                   <a
                     href="#"
-                    onClick={handleDropdownOptionClick}
+                    onClick={() => handleDropdownOptionClick("Logout")}
                     className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                   >
                     Logout
@@ -175,7 +197,6 @@ const Navbar = () => {
         } transition-all duration-500 ease-in-out z-40`}
       >
         <div className="pt-6 pb-8 px-6 flex flex-col space-y-6">
-          {/* Close Icon */}
           <button
             onClick={toggleMenu}
             className="self-end text-gray-700 focus:outline-none"
@@ -261,15 +282,23 @@ const Navbar = () => {
               />
               {dropdownOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-50">
-                  <Link to="/settings"
-                    onClick={handleDropdownOptionClick}
+                  <Link
+                    to="/admin/dashboard"
+                    onClick={() => handleDropdownOptionClick("Settings")}
+                    className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                  >
+                    Dashboard
+                  </Link>
+                  <Link
+                    to="/settings"
+                    onClick={() => handleDropdownOptionClick("Settings")}
                     className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                   >
                     Settings
                   </Link>
                   <a
                     href="#"
-                    onClick={handleDropdownOptionClick}
+                    onClick={() => handleDropdownOptionClick("Logout")}
                     className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                   >
                     Logout
@@ -290,30 +319,45 @@ const Navbar = () => {
 
       {/* Language Modal */}
       {languageModalOpen && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-80">
-            <h2 className="text-lg font-semibold mb-4">Select Language & Currency</h2>
-            <select
-              className="w-full p-2 border border-gray-300 rounded mb-4"
-              onChange={(e) => console.log(e.target.value)}
-            >
-              <option>EN | USD</option>
-              <option>ES | EUR</option>
-              <option>FR | EUR</option>
-            </select>
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 ">
+          <div className=" bg-white rounded-2xl p-5">
+            <div className="flex justify-between text-center items-center gap-3  md:min-w-xl ">
+              {tabs.map((tab) => (
+                <button
+                  key={tab.value}
+                  onClick={() => setActiveTab(tab.value)}
+                  className={`px-10 py-3 rounded-md text-xm transition-all duration-500 cursor-pointer w-full text-center ${
+                    activeTab === tab.value
+                      ? "bg-[#FFF3E7] text-black"
+                      : "text-black hover:bg-white/60"
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+            <div className="py-5 h-[500px] overflow-auto">{tabs.find((tab) => tab.value === activeTab)?.content}</div>
             <button
               onClick={toggleLanguageModal}
-              className="w-full bg-orange-600 text-white py-2 rounded hover:bg-orange-700"
+              className="btn-primary"
             >
-              Close
+              Confirm
             </button>
           </div>
         </div>
       )}
 
       {/* Shared Modal */}
-      <SupportModal isOpen={supportOpen} onClose={closeSupport} openChat={openChat} />
+      <SupportModal
+        isOpen={supportOpen}
+        onClose={closeSupport}
+        openChat={openChat}
+      />
       <ChatModal isOpen={chatOpen} onClose={closeChat} />
+      <LogoutModal
+        isOpen={showLogoutModal}
+        onClose={() => setShowLogoutModal(false)}
+      />
     </nav>
   );
 };

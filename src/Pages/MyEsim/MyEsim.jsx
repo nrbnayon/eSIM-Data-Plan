@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import banner from "../../assets/images/myEsim.svg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CurrentESIMs from "./CurrentESIMs";
 import ArchivedESIMs from "./ArchivedESIMs";
 
@@ -10,14 +10,21 @@ const MyEsim = () => {
     { label: "Archived eSIMs", value: "archived", content: <ArchivedESIMs /> },
   ];
 
-  const [activeTab, setActiveTab] = useState("current");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initialTab = searchParams.get("tab") || "current";
+  const [activeTab, setActiveTab] = useState(initialTab);
+
   const ActiveOffer = true; // Set to false to test the image/text section
+
+  // Sync tab <-> URL query
+  useEffect(() => {
+    setSearchParams({ tab: activeTab });
+  }, [activeTab, setSearchParams]);
 
   return (
     <div className={`mt-16 ${ActiveOffer ? "bg-white" : "bg-[#FFFADD]"}`}>
       <div className="container mx-auto px-4">
         {ActiveOffer ? (
-          // Tabs and Content when ActiveOffer is true
           <div className="py-8">
             <div className="bg-[#FDF8DB] p-2 rounded-lg mb-4 flex justify-between text-center items-center w-full">
               {tabs.map((tab) => (
@@ -38,9 +45,7 @@ const MyEsim = () => {
             <div>{tabs.find((tab) => tab.value === activeTab)?.content}</div>
           </div>
         ) : (
-          // Image and Text Section when ActiveOffer is false
           <div className="min-h-[85vh] grid grid-cols-1 lg:grid-cols-2 items-center justify-center py-8 overflow-hidden">
-            {/* Image Section */}
             <div className="order-1 lg:order-2 flex justify-center lg:justify-end">
               <img
                 src={banner}
@@ -48,7 +53,6 @@ const MyEsim = () => {
                 className="w-full max-w-md lg:max-w-lg object-contain"
               />
             </div>
-            {/* Text Section */}
             <div className="order-2 lg:order-1 text-center lg:text-left">
               <div className="mb-6 sm:mb-8 lg:mb-10">
                 <h1 className="text-[#69AA58] text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold leading-snug sm:leading-tight lg:leading-tight mb-4 sm:mb-6 lg:mb-8">

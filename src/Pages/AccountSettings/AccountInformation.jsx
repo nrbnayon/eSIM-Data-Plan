@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Edit2, Trash2 } from "lucide-react";
+import deleteUser from '../../assets/icons/deleteUser.svg'
+
 
 export default function AccountInformation() {
   const [editingName, setEditingName] = useState(false);
@@ -13,6 +15,7 @@ export default function AccountInformation() {
     confirm: "",
   });
   const [passwordError, setPasswordError] = useState("");
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const handleSaveName = () => {
     console.log("Name updated:", fullName);
@@ -54,8 +57,17 @@ export default function AccountInformation() {
   };
 
   const handleDeleteAccount = () => {
-    console.log("Delete account clicked");
+    setShowDeleteModal(true);
+  };
+
+  const confirmDeleteAccount = () => {
+    console.log("Account deleted");
+    setShowDeleteModal(false);
     // Add actual delete account logic here (e.g., API call)
+  };
+
+  const cancelDelete = () => {
+    setShowDeleteModal(false);
   };
 
   return (
@@ -273,6 +285,37 @@ export default function AccountInformation() {
           <span>Delete</span>
         </button>
       </div>
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-xl p-4 sm:p-6 w-full max-w-md mx-4">
+           <div className="flex items-center justify-center p-3">
+             <img src={deleteUser} alt="" />
+           </div>
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-800 text-center mb-4">
+              Confirm Delete Account
+            </h2>
+            <p className="text-sm sm:text-base text-gray-600 text-center mb-6">
+              You can delete your account, but please note the process may take some time to complete. Once deleted, it cannot be undone later.
+            </p>
+            <div className="flex gap-5">
+              <button
+                onClick={cancelDelete}
+                className="px-4 py-2 bg-gray-100 w-full rounded-full text-sm sm:text-base cursor-pointer hover:bg-gray-200"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmDeleteAccount}
+                className="px-4 py-2 rounded-full w-full text-white font-medium bg-red-600 text-sm sm:text-base hover:bg-red-700 cursor-pointer"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

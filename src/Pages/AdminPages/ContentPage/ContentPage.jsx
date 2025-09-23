@@ -5,7 +5,6 @@ import SectionTitle from "../../../components/SectionTitle";
 const ContentPage = () => {
   const [bannerImage, setBannerImage] = useState(null);
   const [videoImage, setVideoImage] = useState(null);
-  const [description, setDescription] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -59,10 +58,6 @@ const ContentPage = () => {
   };
 
   const handlePublish = () => {
-    if (!description.trim()) {
-      setError("Description is required!");
-      return;
-    }
     if (!bannerImage && !videoImage) {
       setError("Please upload at least one banner or video/image!");
       return;
@@ -92,7 +87,7 @@ const ContentPage = () => {
           </label>
           <div className="relative">
             {bannerImage ? (
-              <div className="relative w-full sm:w-2/3 h-42 border border-gray-300 rounded-lg overflow-hidden group">
+              <div className="relative w-48 h-48 border border-gray-300 rounded-lg overflow-hidden group">
                 <img src={bannerImage} alt="Banner" className="w-full h-full object-cover" />
                 <button
                   onClick={() => handleDelete("banner")}
@@ -102,7 +97,7 @@ const ContentPage = () => {
                 </button>
               </div>
             ) : (
-              <label className="w-full sm:w-2/3 h-42 border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center text-gray-500 cursor-pointer hover:border-purple-400 hover:bg-purple-50 transition">
+              <label className="w-48 h-48 border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center text-gray-500 cursor-pointer hover:border-purple-400 hover:bg-purple-50 transition">
                 <Upload className="w-10 h-10 mb-2 text-gray-400" />
                 <span className="text-sm">Click to upload banner</span>
                 <input
@@ -118,7 +113,7 @@ const ContentPage = () => {
 
         <div className="mb-8">
           <label className="text-gray-700 font-medium mb-2 block">
-            Video / Image <span className="text-gray-400 text-sm">(Image &lt; 5MB, Video &lt; 50MB)</span>
+            Offer Image <span className="text-gray-400 text-sm">(Image &lt; 5MB, Video &lt; 50MB)</span>
           </label>
           <div className="relative">
             {videoImage ? (
@@ -145,21 +140,6 @@ const ContentPage = () => {
             )}
           </div>
         </div>
-
-        <div className="mb-8">
-          <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
-            Description <span className="text-red-600">*</span>
-          </label>
-          <textarea
-            id="description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm resize-y"
-            placeholder="Write a detailed description..."
-            rows={6}
-          />
-        </div>
-
         <div className="flex justify-end">
           <button
             onClick={handlePublish}
