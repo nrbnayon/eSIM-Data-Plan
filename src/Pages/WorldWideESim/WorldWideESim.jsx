@@ -18,15 +18,15 @@ const WorldWideESim = () => {
 
   const [activeTab, setActiveTab] = useState(initialTab);
 
-  // sync state <-> url
+  // Sync state <-> URL
   useEffect(() => {
     setSearchParams({ tab: activeTab });
   }, [activeTab, setSearchParams]);
 
   return (
-    <div className="container mx-auto px-4 py-10">
+    <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
       {/* Banner */}
-      <div className="relative h-[500px] rounded-lg overflow-hidden my-14">
+      <div className="relative h-[120px] sm:h-[300px] md:h-[400px] rounded-lg overflow-hidden mt-14 mb-7">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
@@ -36,12 +36,12 @@ const WorldWideESim = () => {
       </div>
 
       {/* Tabs */}
-      <div className="bg-[#FDF8DB] p-2 rounded-lg mb-4 flex justify-between text-center items-center w-full">
+      <div className="bg-[#FDF8DB] p-1.5 sm:p-2 rounded-lg mb-4 flex justify-between text-center items-center gap-2 sm:gap-0">
         {tabs.map((tab) => (
           <button
             key={tab.value}
             onClick={() => setActiveTab(tab.value)}
-            className={`px-4 py-3 mx-1 rounded-md text-xm w-full cursor-pointer transition-all duration-500 ${
+            className={`px-3 sm:px-6 py-2 sm:py-3 mx-0.5 sm:mx-1 w-full rounded-md text-xs sm:text-sm font-medium cursor-pointer transition-all duration-300 ${
               activeTab === tab.value
                 ? "bg-white text-black shadow-sm"
                 : "text-black hover:bg-white/60"

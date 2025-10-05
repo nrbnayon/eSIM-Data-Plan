@@ -1,5 +1,4 @@
 import { useState } from "react";
-import SectionTitle from "../../../components/SectionTitle";
 import question from "../../../assets/icons/question.svg";
 
 const Settings = () => {
@@ -30,7 +29,6 @@ const Settings = () => {
   ];
 
   const openModal = (ticket) => {
-    // Reset or set initial permissions based on the role (e.g., default for Support Staff)
     setPermissions({
       dashboardAccess: ticket.title === "Super Admin",
       viewUsers: ticket.title === "Super Admin",
@@ -58,83 +56,84 @@ const Settings = () => {
 
   const handleUpdate = () => {
     console.log("Updated permissions for", selectedTicket.title, permissions);
-    closeModal(); // Close modal after update
-    // Add API call or other logic here to save permissions
+    closeModal();
   };
 
   return (
-    <div className="">
-      <SectionTitle title="Settings" description="System configuration and roles" />
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-        <div className="p-4">
-          <div className="flex justify-between items-center">
-            <div>
-              <h1 className="text-xl sm:text-2xl font-semibold text-gray-900">Role Management</h1>
-            </div>
-          </div>
+    <div className="p-2 sm:p-4 md:p-6">
+      <div className="mb-4 sm:mb-6">
+        <h1 className="text-lg sm:text-xl md:text-2xl font-medium mb-2">Settings</h1>
+        <p className="text-xs sm:text-sm text-gray-600">System configuration and roles</p>
+      </div>
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-200">
+        <div className="p-4 sm:p-5 border-b border-gray-200">
+          <h1 className="text-base sm:text-lg md:text-xl font-semibold text-gray-900">Role Management</h1>
         </div>
 
-        <div className="p-4 space-y-4">
-          {tickets.map((ticket) => (
-            <div key={ticket.id} className="flex justify-between items-center">
-              <div className="flex items-center gap-4">
-                <img src={question} alt="" />
-                <span>
-                  <p>{ticket.title}</p>
-                  <p className="text-[#919191]">{ticket.customer}</p>
-                </span>
+        <div className="p-4 sm:p-6 space-y-3 sm:space-y-4">
+          {tickets.length > 0 ? (
+            tickets.map((ticket) => (
+              <div key={ticket.id} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 p-3 sm:p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <img src={question} alt="Role icon" className="w-6 h-6 sm:w-8 sm:h-8" />
+                  <div>
+                    <p className="text-sm sm:text-base font-medium text-gray-900">{ticket.title}</p>
+                    <p className="text-xs sm:text-sm text-gray-500">{ticket.customer}</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => openModal(ticket)}
+                  className="w-full sm:w-auto px-4 py-1.5 text-xs sm:text-sm rounded-full bg-blue-200 text-blue-600 hover:bg-blue-300 transition-colors"
+                >
+                  Edit
+                </button>
               </div>
-              <button
-                onClick={() => openModal(ticket)}
-                className="px-3 py-1 rounded-full bg-blue-200 text-blue-600 hover:bg-blue-300 transition-colors"
-              >
-                Open
-              </button>
-            </div>
-          ))}
+            ))
+          ) : (
+            <div className="text-center py-6 text-gray-500 text-xs sm:text-sm">No roles found.</div>
+          )}
         </div>
       </div>
 
       {isModalOpen && selectedTicket && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl shadow-xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
-            <div className="p-6">
-              <div className="flex justify-between items-start pb-3 mb-4">
-                <h2 className="text-2xl font-semibold text-gray-900">Edit Role</h2>
-                
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 sm:p-6">
+          <div className="bg-white rounded-2xl shadow-xl w-full max-w-md sm:max-w-lg max-h-[90vh] overflow-y-auto">
+            <div className="p-4 sm:p-6">
+              <div className="mb-4 sm:mb-6">
+                <h2 className="text-base sm:text-lg md:text-xl font-semibold text-gray-900">Edit Role</h2>
               </div>
 
-              <div className="bg-blue-50 rounded-lg p-4 mb-6">
+              <div className="bg-blue-50 rounded-lg p-3 sm:p-4 mb-4 sm:mb-6 text-xs sm:text-sm">
                 <h3 className="text-blue-600 font-medium mb-1">{selectedTicket.title}</h3>
-                <p className="text-gray-600 text-sm">Configure permissions for this role</p>
+                <p className="text-gray-600">Configure permissions for this role</p>
               </div>
 
-              <div className="mb-6">
-                <h4 className="font-medium text-gray-900 mb-3">Dashboard Access</h4>
+              <div className="mb-4 sm:mb-6">
+                <h4 className="text-xs sm:text-sm font-medium text-gray-900 mb-2 sm:mb-3">Dashboard Access</h4>
                 <div className="flex items-center gap-3">
                   <input
                     type="checkbox"
                     name="dashboardAccess"
                     checked={permissions.dashboardAccess}
                     onChange={handleCheckboxChange}
-                    className="w-5 h-5 text-blue-600 rounded focus:ring-blue-500"
+                    className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 rounded focus:ring-blue-500"
                   />
-                  <span className="text-gray-600">View dashboard and analytics</span>
+                  <span className="text-xs sm:text-sm text-gray-600">View dashboard and analytics</span>
                 </div>
               </div>
 
-              <div className="mb-6">
-                <h4 className="font-medium text-gray-900 mb-3">User Management</h4>
-                <div className="space-y-3">
+              <div className="mb-4 sm:mb-6">
+                <h4 className="text-xs sm:text-sm font-medium text-gray-900 mb-2 sm:mb-3">User Management</h4>
+                <div className="space-y-2 sm:space-y-3">
                   <div className="flex items-center gap-3">
                     <input
                       type="checkbox"
                       name="viewUsers"
                       checked={permissions.viewUsers}
                       onChange={handleCheckboxChange}
-                      className="w-5 h-5 text-blue-600 rounded focus:ring-blue-500"
+                      className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 rounded focus:ring-blue-500"
                     />
-                    <span className="text-gray-600">View user accounts</span>
+                    <span className="text-xs sm:text-sm text-gray-600">View user accounts</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <input
@@ -142,9 +141,9 @@ const Settings = () => {
                       name="editUsers"
                       checked={permissions.editUsers}
                       onChange={handleCheckboxChange}
-                      className="w-5 h-5 text-blue-600 rounded focus:ring-blue-500"
+                      className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 rounded focus:ring-blue-500"
                     />
-                    <span className="text-gray-600">Edit user accounts</span>
+                    <span className="text-xs sm:text-sm text-gray-600">Edit user accounts</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <input
@@ -152,25 +151,25 @@ const Settings = () => {
                       name="suspendUsers"
                       checked={permissions.suspendUsers}
                       onChange={handleCheckboxChange}
-                      className="w-5 h-5 text-blue-600 rounded focus:ring-blue-500"
+                      className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 rounded focus:ring-blue-500"
                     />
-                    <span className="text-gray-600">Suspend/ban user</span>
+                    <span className="text-xs sm:text-sm text-gray-600">Suspend/ban user</span>
                   </div>
                 </div>
               </div>
 
-              <div className="mb-6">
-                <h4 className="font-medium text-gray-900 mb-3">Plan Management</h4>
-                <div className="space-y-3">
+              <div className="mb-4 sm:mb-6">
+                <h4 className="text-xs sm:text-sm font-medium text-gray-900 mb-2 sm:mb-3">Plan Management</h4>
+                <div className="space-y-2 sm:space-y-3">
                   <div className="flex items-center gap-3">
                     <input
                       type="checkbox"
                       name="viewPlans"
                       checked={permissions.viewPlans}
                       onChange={handleCheckboxChange}
-                      className="w-5 h-5 text-blue-600 rounded focus:ring-blue-500"
+                      className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 rounded focus:ring-blue-500"
                     />
-                    <span className="text-gray-600">View eSIM plans</span>
+                    <span className="text-xs sm:text-sm text-gray-600">View eSIM plans</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <input
@@ -178,23 +177,23 @@ const Settings = () => {
                       name="editPlans"
                       checked={permissions.editPlans}
                       onChange={handleCheckboxChange}
-                      className="w-5 h-5 text-blue-600 rounded focus:ring-blue-500"
+                      className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 rounded focus:ring-blue-500"
                     />
-                    <span className="text-gray-600">Create/edit plans</span>
+                    <span className="text-xs sm:text-sm text-gray-600">Create/edit plans</span>
                   </div>
                 </div>
               </div>
 
-              <div className="flex justify-end gap-3 mt-8">
+              <div className="flex flex-col sm:flex-row justify-end gap-2 sm:gap-3 mt-4 sm:mt-6">
                 <button
                   onClick={closeModal}
-                  className="px-6 py-2 text-gray-600 hover:text-gray-800 transition-colors"
+                  className="w-full sm:w-auto px-4 sm:px-6 py-2 text-xs sm:text-sm text-gray-600 hover:text-gray-800 bg-gray-200 rounded-lg transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleUpdate}
-                  className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                  className="w-full sm:w-auto px-4 sm:px-6 py-2 text-xs sm:text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                 >
                   Update
                 </button>

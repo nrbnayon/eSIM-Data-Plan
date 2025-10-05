@@ -14,6 +14,7 @@ import useModal from "../../components/modal/useModal";
 import { useState } from "react";
 
 const TopUpCallCard = () => {
+  const [selectedDuration, setSelectedDuration] = useState(null);
   const { isOpen, openModal, closeModal } = useModal();
   const [priceRange, setPriceRange] = useState({ min: 10, max: 150 });
   const [sortOrder, setSortOrder] = useState(null);
@@ -88,111 +89,136 @@ const TopUpCallCard = () => {
   });
 
   return (
-    <div>
-      <div className="flex justify-between items-center ">
-        <h1 className="text-2xl font-bold">Top Up</h1>
+    <div className="container mx-auto">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-6">
+        <h1 className="text-xl sm:text-2xl font-bold">Top Up</h1>
         <div
-          className="bg-[#FDF8DB] p-5 rounded-lg cursor-pointer"
+          className="bg-[#FDF8DB] p-3 sm:p-4 rounded-lg cursor-pointer mt-3 sm:mt-0"
           onClick={openModal}
         >
-          <img src={filter} alt="" />
+          <img src={filter} alt="Filter" className="w-5 h-5 sm:w-6 sm:h-6" />
         </div>
       </div>
-      <div className="my-7 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-10">
+      <div className="my-6 sm:my-8 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6 sm:gap-10">
         {sortedOffers.map((offer, index) => (
           <div
             key={index}
-            className={`rounded-2xl border border-gray-200 p-6 shadow-sm bg-[#FFF6ED]`}
+            className="rounded-2xl border border-gray-200 p-4 sm:p-6 shadow-sm bg-[#FFF6ED]"
           >
             {/* Header with logo and sale badge */}
-            <div className="flex items-center justify-between mb-8">
-              <div className="flex items-center gap-3">
+            <div className="flex items-center justify-between mb-6 sm:mb-8">
+              <div className="flex items-center gap-2 sm:gap-3">
                 <div>
-                  <img src={eSime} alt="" className="w-10 h-10" />
+                  <img src={eSime} alt="eSIM" className="w-8 sm:w-10 h-8 sm:h-10" />
                 </div>
-                <h2 className="text-2xl font-semibold text-gray-900">
+                <h2 className="text-xl sm:text-2xl font-semibold text-gray-900">
                   {offer?.company}
                 </h2>
               </div>
-              <div className="bg-gradient-to-b from-[#FFA943] to-[#E97400] text-white px-4 py-1.5 rounded-full text-sm font-medium">
+              <div className="bg-gradient-to-b from-[#FFA943] to-[#E97400] text-white px-3 sm:px-4 py-1 sm:py-1.5 rounded-full text-xs sm:text-sm font-medium">
                 ON SALE
               </div>
             </div>
 
             {/* Plan details */}
-            <div className="space-y-6">
+            <div className="space-y-3 sm:space-y-4">
               {/* Coverage */}
-              <div className="flex items-center justify-between border-b pb-2 border-gray-300">
-                <div className="flex items-center gap-3">
-                  <Globe className="w-5 h-5 text-gray-400" strokeWidth={1.5} />
-                  <span className="text-gray-600 text-lg">Coverage</span>
+              <div className="flex items-center justify-between border-b pb-2 border-gray-200">
+                <div className="flex items-center gap-2">
+                  <Globe
+                    className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400"
+                    strokeWidth={1.5}
+                  />
+                  <span className="text-xs sm:text-sm text-gray-600 font-medium">
+                    Coverage
+                  </span>
                 </div>
-                <span className="text-gray-900 text-lg font-semibold">
+                <span className="text-xs sm:text-sm text-gray-900 font-semibold">
                   {offer.coverage}
                 </span>
               </div>
 
               {/* Duration */}
-              <div className="flex items-center justify-between border-b pb-2 border-gray-300">
-                <div className="flex items-center gap-3">
+              <div className="flex items-center justify-between border-b pb-2 border-gray-200">
+                <div className="flex items-center gap-2">
                   <Calendar
-                    className="w-5 h-5 text-gray-400"
+                    className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400"
                     strokeWidth={1.5}
                   />
-                  <span className="text-gray-600 text-lg">Duration</span>
+                  <span className="text-xs sm:text-sm text-gray-600 font-medium">
+                    Duration
+                  </span>
                 </div>
-                <span className="text-gray-900 text-lg font-semibold">
+                <span className="text-xs sm:text-sm text-gray-900 font-semibold">
                   {offer.duration}
                 </span>
               </div>
 
               {/* Data */}
-              <div className="flex items-center justify-between border-b pb-2 border-gray-300">
-                <div className="flex items-center gap-3">
+              <div className="flex items-center justify-between border-b pb-2 border-gray-200">
+                <div className="flex items-center gap-2">
                   <Smartphone
-                    className="w-5 h-5 text-gray-400"
+                    className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400"
                     strokeWidth={1.5}
                   />
-                  <span className="text-gray-600 text-lg">Data</span>
+                  <span className="text-xs sm:text-sm text-gray-600 font-medium">
+                    Data
+                  </span>
                 </div>
-                <span className="text-gray-900 text-lg font-semibold">
+                <span className="text-xs sm:text-sm text-gray-900 font-semibold">
                   {offer.data}
                 </span>
               </div>
-              <div className="flex items-center justify-between border-b pb-2 border-gray-300">
-                <div className="flex items-center gap-3">
-                  <Phone className="w-5 h-5 text-gray-400" strokeWidth={1.5} />
-                  <span className="text-gray-600 text-lg">Call</span>
+
+              {/* Calls */}
+              <div className="flex items-center justify-between border-b pb-2 border-gray-200">
+                <div className="flex items-center gap-2">
+                  <Phone
+                    className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400"
+                    strokeWidth={1.5}
+                  />
+                  <span className="text-xs sm:text-sm text-gray-600 font-medium">
+                    Call
+                  </span>
                 </div>
-                <span className="text-gray-900 text-lg font-semibold">
+                <span className="text-xs sm:text-sm text-gray-900 font-semibold">
                   {offer.calls}
                 </span>
               </div>
-              <div className="flex items-center justify-between border-b pb-2 border-gray-300">
-                <div className="flex items-center gap-3">
+
+              {/* Texts */}
+              <div className="flex items-center justify-between border-b pb-2 border-gray-200">
+                <div className="flex items-center gap-2">
                   <MessageSquareText
-                    className="w-5 h-5 text-gray-400"
+                    className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400"
                     strokeWidth={1.5}
                   />
-                  <span className="text-gray-600 text-lg">Text</span>
+                  <span className="text-xs sm:text-sm text-gray-600 font-medium">
+                    Text
+                  </span>
                 </div>
-                <span className="text-gray-900 text-lg font-semibold">
+                <span className="text-xs sm:text-sm text-gray-900 font-semibold">
                   {offer.texts}
                 </span>
               </div>
 
               {/* Price */}
-              <div className="flex items-center justify-between border-b pb-2 border-gray-300">
-                <div className="flex items-center gap-3">
-                  <Layers className="w-5 h-5 text-gray-400" strokeWidth={1.5} />
-                  <span className="text-gray-600 text-lg">Price</span>
+              <div className="flex items-center justify-between border-b pb-2 border-gray-200">
+                <div className="flex items-center gap-2">
+                  <Layers
+                    className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400"
+                    strokeWidth={1.5}
+                  />
+                  <span className="text-xs sm:text-sm text-gray-600 font-medium">
+                    Price
+                  </span>
                 </div>
                 <div className="text-right">
-                  <span className="text-gray-500 text-lg">USD </span>
-                  <span className="text-gray-400 line-through text-lg">
+                  <span className="text-gray-500 text-xs sm:text-sm">USD </span>
+                  <span className="text-gray-400 line-through text-xs sm:text-sm">
                     {offer.originalPrice}
                   </span>
-                  <span className="text-gray-900 text-lg font-semibold ml-1">
+                  <span className="text-gray-900 text-xs sm:text-sm font-semibold">
                     ${offer.discountedPrice}
                   </span>
                 </div>
@@ -202,111 +228,136 @@ const TopUpCallCard = () => {
             {/* Buy now button */}
             <button
               onClick={() => navigate(`/order-preview/${index}`)}
-              className="w-full bg-gradient-to-b from-[#FFA943] to-[#E97400] hover:scale-105 text-white font-semibold py-2 px-6 rounded-full text-lg mt-8 transition-transform duration-300 shadow-lg cursor-pointer"
+              className="w-full bg-gradient-to-b from-[#FFA943] to-[#E97400] hover:scale-105 text-white font-semibold py-2 px-4 sm:px-6 rounded-full text-sm sm:text-lg mt-6 sm:mt-7 transition-transform duration-300 shadow-lg cursor-pointer"
             >
               Buy now
             </button>
           </div>
         ))}
       </div>
-      <div className="flex justify-between items-center mt-20">
-        <h1 className="text-2xl font-bold">Repurchase</h1>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-8 sm:mt-10 mb-4 sm:mb-6">
+        <h1 className="text-xl sm:text-2xl font-bold">Repurchase</h1>
       </div>
-      <div className="my-7 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-10">
+      <div className="my-6 sm:my-8 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6 sm:gap-10">
         {sortedOffers.map((offer, index) => (
           <div
             key={index}
-            className={`rounded-2xl border border-gray-200 p-6 shadow-sm bg-[#FFF6ED]`}
+            className="rounded-2xl border border-gray-200 p-4 sm:p-6 shadow-sm bg-[#FFF6ED]"
           >
             {/* Header with logo and sale badge */}
-            <div className="flex items-center justify-between mb-8">
-              <div className="flex items-center gap-3">
+            <div className="flex items-center justify-between mb-6 sm:mb-8">
+              <div className="flex items-center gap-2 sm:gap-3">
                 <div>
-                  <img src={eSime} alt="" className="w-10 h-10" />
+                  <img src={eSime} alt="eSIM" className="w-8 sm:w-10 h-8 sm:h-10" />
                 </div>
-                <h2 className="text-2xl font-semibold text-gray-900">
+                <h2 className="text-xl sm:text-2xl font-semibold text-gray-900">
                   {offer?.company}
                 </h2>
               </div>
-              <div className="bg-gradient-to-b from-[#FFA943] to-[#E97400] text-white px-4 py-1.5 rounded-full text-sm font-medium">
+              <div className="bg-gradient-to-b from-[#FFA943] to-[#E97400] text-white px-3 sm:px-4 py-1 sm:py-1.5 rounded-full text-xs sm:text-sm font-medium">
                 ON SALE
               </div>
             </div>
 
             {/* Plan details */}
-            <div className="space-y-6">
+            <div className="space-y-3 sm:space-y-4">
               {/* Coverage */}
-              <div className="flex items-center justify-between border-b pb-2 border-gray-300">
-                <div className="flex items-center gap-3">
-                  <Globe className="w-5 h-5 text-gray-400" strokeWidth={1.5} />
-                  <span className="text-gray-600 text-lg">Coverage</span>
+              <div className="flex items-center justify-between border-b pb-2 border-gray-200">
+                <div className="flex items-center gap-2">
+                  <Globe
+                    className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400"
+                    strokeWidth={1.5}
+                  />
+                  <span className="text-xs sm:text-sm text-gray-600 font-medium">
+                    Coverage
+                  </span>
                 </div>
-                <span className="text-gray-900 text-lg font-semibold">
+                <span className="text-xs sm:text-sm text-gray-900 font-semibold">
                   {offer.coverage}
                 </span>
               </div>
 
               {/* Duration */}
-              <div className="flex items-center justify-between border-b pb-2 border-gray-300">
-                <div className="flex items-center gap-3">
+              <div className="flex items-center justify-between border-b pb-2 border-gray-200">
+                <div className="flex items-center gap-2">
                   <Calendar
-                    className="w-5 h-5 text-gray-400"
+                    className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400"
                     strokeWidth={1.5}
                   />
-                  <span className="text-gray-600 text-lg">Duration</span>
+                  <span className="text-xs sm:text-sm text-gray-600 font-medium">
+                    Duration
+                  </span>
                 </div>
-                <span className="text-gray-900 text-lg font-semibold">
+                <span className="text-xs sm:text-sm text-gray-900 font-semibold">
                   {offer.duration}
                 </span>
               </div>
 
               {/* Data */}
-              <div className="flex items-center justify-between border-b pb-2 border-gray-300">
-                <div className="flex items-center gap-3">
+              <div className="flex items-center justify-between border-b pb-2 border-gray-200">
+                <div className="flex items-center gap-2">
                   <Smartphone
-                    className="w-5 h-5 text-gray-400"
+                    className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400"
                     strokeWidth={1.5}
                   />
-                  <span className="text-gray-600 text-lg">Data</span>
+                  <span className="text-xs sm:text-sm text-gray-600 font-medium">
+                    Data
+                  </span>
                 </div>
-                <span className="text-gray-900 text-lg font-semibold">
+                <span className="text-xs sm:text-sm text-gray-900 font-semibold">
                   {offer.data}
                 </span>
               </div>
-              <div className="flex items-center justify-between border-b pb-2 border-gray-300">
-                <div className="flex items-center gap-3">
-                  <Phone className="w-5 h-5 text-gray-400" strokeWidth={1.5} />
-                  <span className="text-gray-600 text-lg">Call</span>
+
+              {/* Calls */}
+              <div className="flex items-center justify-between border-b pb-2 border-gray-200">
+                <div className="flex items-center gap-2">
+                  <Phone
+                    className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400"
+                    strokeWidth={1.5}
+                  />
+                  <span className="text-xs sm:text-sm text-gray-600 font-medium">
+                    Call
+                  </span>
                 </div>
-                <span className="text-gray-900 text-lg font-semibold">
+                <span className="text-xs sm:text-sm text-gray-900 font-semibold">
                   {offer.calls}
                 </span>
               </div>
-              <div className="flex items-center justify-between border-b pb-2 border-gray-300">
-                <div className="flex items-center gap-3">
+
+              {/* Texts */}
+              <div className="flex items-center justify-between border-b pb-2 border-gray-200">
+                <div className="flex items-center gap-2">
                   <MessageSquareText
-                    className="w-5 h-5 text-gray-400"
+                    className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400"
                     strokeWidth={1.5}
                   />
-                  <span className="text-gray-600 text-lg">Text</span>
+                  <span className="text-xs sm:text-sm text-gray-600 font-medium">
+                    Text
+                  </span>
                 </div>
-                <span className="text-gray-900 text-lg font-semibold">
+                <span className="text-xs sm:text-sm text-gray-900 font-semibold">
                   {offer.texts}
                 </span>
               </div>
 
               {/* Price */}
-              <div className="flex items-center justify-between border-b pb-2 border-gray-300">
-                <div className="flex items-center gap-3">
-                  <Layers className="w-5 h-5 text-gray-400" strokeWidth={1.5} />
-                  <span className="text-gray-600 text-lg">Price</span>
+              <div className="flex items-center justify-between border-b pb-2 border-gray-200">
+                <div className="flex items-center gap-2">
+                  <Layers
+                    className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400"
+                    strokeWidth={1.5}
+                  />
+                  <span className="text-xs sm:text-sm text-gray-600 font-medium">
+                    Price
+                  </span>
                 </div>
                 <div className="text-right">
-                  <span className="text-gray-500 text-lg">USD </span>
-                  <span className="text-gray-400 line-through text-lg">
+                  <span className="text-gray-500 text-xs sm:text-sm">USD </span>
+                  <span className="text-gray-400 line-through text-xs sm:text-sm">
                     {offer.originalPrice}
                   </span>
-                  <span className="text-gray-900 text-lg font-semibold ml-1">
+                  <span className="text-gray-900 text-xs sm:text-sm font-semibold">
                     ${offer.discountedPrice}
                   </span>
                 </div>
@@ -316,7 +367,7 @@ const TopUpCallCard = () => {
             {/* Buy now button */}
             <button
               onClick={() => navigate(`/order-preview/${index}`)}
-              className="w-full bg-gradient-to-b from-[#FFA943] to-[#E97400] hover:scale-105 text-white font-semibold py-2 px-6 rounded-full text-lg mt-8 transition-transform duration-300 shadow-lg cursor-pointer"
+              className="w-full bg-gradient-to-b from-[#FFA943] to-[#E97400] hover:scale-105 text-white font-semibold py-2 px-4 sm:px-6 rounded-full text-sm sm:text-lg mt-6 sm:mt-7 transition-transform duration-300 shadow-lg cursor-pointer"
             >
               Buy now
             </button>
@@ -326,18 +377,21 @@ const TopUpCallCard = () => {
 
       {/* Modal */}
       {isOpen && (
-        <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-[500px] relative">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4">
+          <div className="bg-white p-4 sm:p-6 rounded-lg shadow-lg w-full max-w-[90%] sm:max-w-[400px] relative">
             <button
-              className="absolute top-5 cursor-pointer right-5 text-gray-600 hover:text-gray-900"
+              className="absolute top-3 sm:top-4 right-3 sm:right-4 text-gray-600 hover:text-gray-900 cursor-pointer"
               onClick={closeModal}
             >
-              <X className="w-6 h-6" strokeWidth={1.5} />
+              <X
+                className="w-5 h-5 sm:w-6 sm:h-6"
+                strokeWidth={1.5}
+              />
             </button>
-            <h2 className="text-xl font-medium mb-4">Filter</h2>
-            <div className="space-y-4">
+            <h2 className="text-lg sm:text-xl font-medium mb-3 sm:mb-4">Filter</h2>
+            <div className="space-y-3 sm:space-y-4">
               <button
-                className={`w-full text-left text-gray-800 p-2 rounded border border-gray-200 ${
+                className={`w-full text-left text-gray-800 p-2 rounded border border-gray-200 text-xs sm:text-sm ${
                   sortOrder === "lowToHigh"
                     ? "bg-gray-100"
                     : "hover:bg-gray-100"
@@ -347,7 +401,7 @@ const TopUpCallCard = () => {
                 Price Low to High
               </button>
               <button
-                className={`w-full text-left text-gray-800 p-2 rounded border border-gray-200 ${
+                className={`w-full text-left text-gray-800 p-2 rounded border border-gray-200 text-xs sm:text-sm ${
                   sortOrder === "highToLow"
                     ? "bg-gray-100"
                     : "hover:bg-gray-100"
@@ -357,9 +411,9 @@ const TopUpCallCard = () => {
                 Price High to Low
               </button>
               <div>
-                <p className="text-gray-700 mb-2">Price Range</p>
-                <div className="flex items-center gap-2">
-                  <span>${priceRange.min}</span>
+                <p className="text-gray-700 mb-2 text-xs sm:text-sm">Price Range</p>
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <span className="text-xs sm:text-sm">${priceRange.min}</span>
                   <input
                     type="range"
                     min="10"
@@ -368,18 +422,34 @@ const TopUpCallCard = () => {
                     onChange={handlePriceRangeChange}
                     className="w-full accent-black"
                   />
-                  <span>${priceRange.max}</span>
+                  <span className="text-xs sm:text-sm">${priceRange.max}</span>
                 </div>
               </div>
-              <div className="flex gap-5 mt-4">
+              <div>
+                <p className="text-gray-700 mb-2 text-sm sm:text-base">Duration</p>
+                <div className="grid grid-cols-3 gap-2">
+                  {["3day", "7day", "15day", "30day", "45day", "100day", "6month", "1year"].map((duration) => (
+                    <button
+                      key={duration}
+                      onClick={() => setSelectedDuration(duration)}
+                      className={`p-2 rounded-full border border-gray-200 text-sm sm:text-base ${
+                        selectedDuration === duration ? "bg-gray-100" : "hover:bg-gray-100"
+                      }`}
+                    >
+                      {duration === "6month" ? "6 Months" : duration === "1year" ? "1 Year" : `${duration.replace("day", " Days")}`}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="flex gap-3 sm:gap-4 mt-3 sm:mt-4">
                 <button
-                  className="bg-gray-200 text-black px-4 py-2 rounded-full w-full"
+                  className="bg-gray-200 text-black px-3 sm:px-4 py-2 rounded-full w-full text-xs sm:text-sm"
                   onClick={handleClearFilters}
                 >
                   Clear
                 </button>
                 <button
-                  className="bg-black text-white px-4 py-2 rounded-full w-full"
+                  className="bg-black text-white px-3 sm:px-4 py-2 rounded-full w-full text-xs sm:text-sm"
                   onClick={handleApplyFilters}
                 >
                   Apply

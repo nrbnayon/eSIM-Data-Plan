@@ -19,8 +19,8 @@ const Regions = () => {
   ];
 
   return (
-    <div className="my-16">
-      <h2 className="text-3xl font-medium mb-4">Regions</h2>
+    <div className="my-14">
+      <h2 className="text-2xl md:text-3xl font-medium text-center md:text-left mb-4">Regions</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-7 mb-10">
         {regions.map((region, index) => (
           <Link key={index} to={`/region/${region.name.toLowerCase().replace(' ', '-')}`}>

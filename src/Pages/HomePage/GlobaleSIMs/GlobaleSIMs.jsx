@@ -35,15 +35,17 @@ const GlobaleSIMs = () => {
 
   return (
     <div className="my-10">
-      <div className="flex justify-between">
-        <div>
-        <h1 className="text-3xl font-medium">Global eSIMs</h1>
-        <p className="text-gray-600 mb-4">
-          Discover our range of global eSIMs for seamless connectivity while
-          traveling.
-        </p>
-      </div>
-      <Link to='/worldwide' className="text-[#FF8911] hover:underline">See All</Link>
+      <div className="grid grid-cols-4 items-center justify-between mb-5">
+        <div className="col-span-3">
+          <h1 className="md:text-3xl text-xl font-medium">Global eSIMs</h1>
+          <p className="text-gray-600 text-xs">
+            Discover our range of global eSIMs for seamless connectivity while
+            traveling.
+          </p>
+        </div>
+        <Link to="/worldwide" className="text-[#FF8911] hover:underline text-end">
+          See All
+        </Link>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-10">

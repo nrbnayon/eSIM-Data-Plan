@@ -9,6 +9,7 @@ import {
   Cell,
   Tooltip,
 } from "recharts";
+import { useState, useEffect } from "react";
 
 const RevenueCharts = () => {
   const monthlyData = [
@@ -32,10 +33,17 @@ const RevenueCharts = () => {
     { name: "Global", value: 10, color: "#799EFF" },
   ];
 
-  // const CustomBar = (props) => {
-  //   const { fill, ...rest } = props;
-  //   return <Bar {...rest} fill="#8B5CF6" radius={[2, 2, 0, 0]} />;
-  // };
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const isMobile = windowWidth < 768;
+  const barHeight = isMobile ? 300 : 320;
+  const pieSize = isMobile ? 200 : 240;
 
   const formatYAxis = (value) => {
     return `${value / 1000}K`;
@@ -70,29 +78,29 @@ const RevenueCharts = () => {
     <div className="min-h-screen mt-7">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-          <div className="mb-3 flex justify-between items-center">
+          <div className="mb-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-0">
             <div>
               <h2 className="text-xl font-semibold text-gray-900 mb-1">
                 Monthly Revenue
               </h2>
               <p className="text-sm text-gray-500">Earning over last year</p>
             </div>
-            <div className="flex gap-5 items-center">
+            <div className="flex flex-wrap gap-5 items-center justify-center sm:justify-end">
               <div className="flex items-center gap-3">
                 <div className="bg-blue-600 h-4 w-4 rounded-full"></div>
-                <p>Last year</p>
+                <p className="text-sm">Last year</p>
               </div>
               <div className="flex items-center gap-3">
                 <div className="bg-blue-400 h-4 w-4 rounded-full"></div>
-                <p>Current year</p>
+                <p className="text-sm">Current year</p>
               </div>
             </div>
           </div>
-          <div className="h-80">
+          <div className="h-[320px] lg:h-[400px] sm:h-80" style={{ minHeight: `${barHeight}px` }}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
                 data={monthlyData}
-                margin={{ top: 0, right: 40, left: 10, bottom: 20 }}
+                margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
               >
                 <XAxis
                   dataKey="month"
@@ -112,12 +120,12 @@ const RevenueCharts = () => {
                 <Bar
                   dataKey="secondary"
                   fill="#799EFF"
-                  radius={[20, 20, 20, 20]}
+                  radius={isMobile ? [10, 10, 10, 10] : [20, 20, 20, 20]}
                 />
                 <Bar
                   dataKey="primary"
                   fill="#3D5EFF"
-                  radius={[20, 20, 20, 20]}
+                  radius={isMobile ? [10, 10, 10, 10] : [20, 20, 20, 20]}
                 />
               </BarChart>
             </ResponsiveContainer>
@@ -132,7 +140,7 @@ const RevenueCharts = () => {
             <p className="text-sm text-gray-500">last month earning activity</p>
           </div>
           <div className="flex justify-center mb-8">
-            <div className="relative w-60 h-60">
+            <div className="relative" style={{ width: pieSize, height: pieSize }}>
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Tooltip content={<PieTooltip />} />
@@ -140,8 +148,8 @@ const RevenueCharts = () => {
                     data={pieData}
                     cx="50%"
                     cy="50%"
-                    innerRadius={50}
-                    outerRadius={80}
+                    innerRadius={isMobile ? 30 : 50}
+                    outerRadius={isMobile ? 60 : 80}
                     paddingAngle={2}
                     dataKey="value"
                     startAngle={90}
@@ -155,7 +163,7 @@ const RevenueCharts = () => {
               </ResponsiveContainer>
             </div>
           </div>
-          <div className="flex items-center justify-around space-x-4">
+          <div className="flex flex-col sm:flex-row items-center justify-around sm:justify-between space-y-2 sm:space-y-0 gap-4">
             <div className="flex items-center">
               <div className="w-3 h-3 rounded-full bg-[#FF7782] mr-3"></div>
               <span className="text-sm text-gray-600">Countries</span>

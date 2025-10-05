@@ -7,10 +7,10 @@ const RewardOffer = () => {
     <div className=" grid md:grid-cols-2 gap-7">
       <div className="bg-[#FFDAE1] rounded-2xl p-6 flex justify-between items-center">
         <div>
-          <p className=" text-gray-600">
+          <p className="text-xs md:text-lg text-gray-600">
             Earn $6 for every successful referral
           </p>
-          <h2 className="text-3xl font-medium text-center">
+          <h2 className="md:text-3xl text-xl font-medium">
             Share the Love, Earn Perks!
           </h2>
         </div>
@@ -20,10 +20,10 @@ const RewardOffer = () => {
       </div>
       <div className="bg-[#EDDBFF] rounded-2xl p-6 flex justify-between items-center">
         <div>
-          <p className=" text-gray-600">
+          <p className="text-xs md:text-lg text-gray-600">
             Earn $6 for every successful referral
           </p>
-          <h2 className="text-3xl font-medium text-center">
+          <h2 className="md:text-3xl text-xl font-medium">
             USe Code: FIRST12GD1
           </h2>
         </div>

@@ -2,7 +2,7 @@
 
 const Direct = () => {
   return (
-    <div className="p-3">
+    <div className="">
         {/* Warning */}
       <div className="bg-orange-50 border-l-4 border-orange-500 text-orange-600 px-4 py-3 rounded mb-6 sm:mb-8 lg:mb-10">
         <span className="font-medium">⚠️ Warning:</span> Most eSIMs can only be

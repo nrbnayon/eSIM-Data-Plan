@@ -6,6 +6,7 @@ import filter from "../../../assets/icons/filter.svg";
 import useModal from "../../../components/modal/useModal";
 
 const RegionOffers = () => {
+  const [selectedDuration, setSelectedDuration] = useState(null);
   const navigate = useNavigate();
   const { regionName } = useParams();
   const [currentPage, setCurrentPage] = useState(1);
@@ -392,6 +393,22 @@ const RegionOffers = () => {
                     className="w-full accent-black"
                   />
                   <span>${priceRange.max}</span>
+                </div>
+              </div>
+              <div>
+                <p className="text-gray-700 mb-2 text-sm sm:text-base">Duration</p>
+                <div className="grid grid-cols-3 gap-2">
+                  {["3day", "7day", "15day", "30day", "45day", "100day", "6month", "1year"].map((duration) => (
+                    <button
+                      key={duration}
+                      onClick={() => setSelectedDuration(duration)}
+                      className={`p-2 rounded-full border border-gray-200 text-sm sm:text-base ${
+                        selectedDuration === duration ? "bg-gray-100" : "hover:bg-gray-100"
+                      }`}
+                    >
+                      {duration === "6month" ? "6 Months" : duration === "1year" ? "1 Year" : `${duration.replace("day", " Days")}`}
+                    </button>
+                  ))}
                 </div>
               </div>
               <div className="flex gap-5 mt-4">

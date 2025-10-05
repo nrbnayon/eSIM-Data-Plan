@@ -27,8 +27,7 @@ const SignIn = () => {
   const onSubmit = (data) => {
     // Find matching credential
     const credential = Object.values(dummyCredentials).find(
-      (cred) =>
-        cred.email === data.email && cred.password === data.password
+      (cred) => cred.email === data.email && cred.password === data.password
     );
 
     if (credential) {
@@ -115,6 +114,28 @@ const SignIn = () => {
                   Forget Password
                 </Link>
               </div>
+            </div>
+
+            {/* Divider */}
+            <div className="divider">Or Continue with</div>
+            {/* Social Login */}
+            <div className="flex space-x-4">
+              <button className="flex-1 flex items-center justify-center border border-base-300 rounded-full py-2 hover:bg-gray-100">
+                <img
+                  src="https://www.svgrepo.com/show/475656/google-color.svg"
+                  alt="Google"
+                  className="w-5 h-5 mr-2"
+                />
+                Google
+              </button>
+              <button className="flex-1 flex items-center justify-center border border-base-300 rounded-full py-2 hover:bg-gray-100">
+              <img
+                src="https://assets.likefamily.com.au/public/images/socials/apple-icon.png?auto=compress&q=50&ixlib=react-9.3.0"
+                alt="Facebook"
+                className="w-7 h-7 mr-2"
+              />
+              Apple
+            </button>
             </div>
 
             <button type="submit" className="btn-primary w-full mt-4">

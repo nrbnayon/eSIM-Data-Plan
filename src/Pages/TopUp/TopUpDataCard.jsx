@@ -6,6 +6,7 @@ import { X } from "lucide-react";
 import { useState } from "react";
 
 const TopUpDataCard = () => {
+  const [selectedDuration, setSelectedDuration] = useState(null);
   const { isOpen, openModal, closeModal } = useModal();
   const [priceRange, setPriceRange] = useState({ min: 10, max: 150 });
   const [sortOrder, setSortOrder] = useState(null);
@@ -80,12 +81,12 @@ const TopUpDataCard = () => {
   return (
     <div className="">
       <div className="flex justify-between items-center ">
-        <h1 className="text-2xl font-bold">Top Up</h1>
+        <h1 className="text-xl sm:text-2xl font-bold">Top Up</h1>
         <div
-          className="bg-[#FDF8DB] p-5 rounded-lg cursor-pointer"
+          className="bg-[#FDF8DB] p-3 sm:p-4 rounded-lg cursor-pointer mt-3 sm:mt-0"
           onClick={openModal}
         >
-          <img src={filter} alt="" />
+          <img src={filter} alt="" className="w-5 h-5 sm:w-6 sm:h-6"/>
         </div>
       </div>
       <div className="my-7 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-10">
@@ -172,6 +173,22 @@ const TopUpDataCard = () => {
                     className="w-full accent-black"
                   />
                   <span>${priceRange.max}</span>
+                </div>
+              </div>
+              <div>
+                <p className="text-gray-700 mb-2 text-sm sm:text-base">Duration</p>
+                <div className="grid grid-cols-3 gap-2">
+                  {["3day", "7day", "15day", "30day", "45day", "100day", "6month", "1year"].map((duration) => (
+                    <button
+                      key={duration}
+                      onClick={() => setSelectedDuration(duration)}
+                      className={`p-2 rounded-full border border-gray-200 text-sm sm:text-base ${
+                        selectedDuration === duration ? "bg-gray-100" : "hover:bg-gray-100"
+                      }`}
+                    >
+                      {duration === "6month" ? "6 Months" : duration === "1year" ? "1 Year" : `${duration.replace("day", " Days")}`}
+                    </button>
+                  ))}
                 </div>
               </div>
               <div className="flex gap-5 mt-4">

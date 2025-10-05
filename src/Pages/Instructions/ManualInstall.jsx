@@ -7,7 +7,7 @@ const ManualInstall = () => {
   };
 
   return (
-    <div className="p-3">
+    <div className="">
       {/* Warning */}
       <div className="bg-orange-50 border-l-4 border-orange-500 text-orange-600 px-4 py-3 rounded mb-6 sm:mb-8 lg:mb-10">
         <span className="font-medium">⚠️ Warning:</span> Most eSIMs can only be
@@ -16,7 +16,7 @@ const ManualInstall = () => {
       </div>
 
       {/* Main Content */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 lg:gap-10 items-start">
+      <div className="md:grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 lg:gap-10 items-start">
         {/* SM-DP & Activation Code */}
         <div className="bg-white shadow rounded-xl p-4 sm:p-6 lg:p-8 text-gray-800">
           {/* SM-DP */}
@@ -63,7 +63,7 @@ const ManualInstall = () => {
         </div>
 
         {/* Instructions */}
-        <div className="col-span-2">
+        <div className="col-span-2 md:mt-0 mt-5">
           <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-800 mb-2 sm:mb-3">
             Step 1 - Install eSIM
           </h2>

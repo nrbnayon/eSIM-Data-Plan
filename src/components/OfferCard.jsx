@@ -21,60 +21,52 @@ const OfferCard = ({
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-3">
           <div>
-            <img src={eSime} alt="" className="w-10 h-10" />
+            <img src={eSime} alt="" className="w-8 h-8 md:w-10 md:h-10" />
           </div>
-          <h2 className="text-2xl font-semibold text-gray-900">{company}</h2>
+          <h2 className="md:text-2xl text-lg font-semibold text-gray-900">{company}</h2>
         </div>
         <div className={`${saleBadge}`}>ON SALE</div>
       </div>
 
       {/* Plan details */}
-      <div className="space-y-6">
+      <div className="space-y-3 sm:space-y-4">
         {/* Coverage */}
-        <div className="flex items-center justify-between border-b pb-2 border-gray-300">
-          <div className="flex items-center gap-3">
-            <Globe className="w-5 h-5 text-gray-400" strokeWidth={1.5} />
-            <span className="text-gray-600 text-lg">Coverage</span>
+        <div className="flex items-center justify-between border-b pb-2 border-gray-200">
+          <div className="flex items-center gap-2">
+            <Globe className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400" strokeWidth={1.5} />
+            <span className="text-xs sm:text-sm text-gray-600 font-medium">Coverage</span>
           </div>
-          <span className="text-gray-900 text-lg font-semibold">
-            {coverage}
-          </span>
+          <span className="text-xs sm:text-sm text-gray-900 font-semibold">{coverage}</span>
         </div>
 
         {/* Duration */}
-        <div className="flex items-center justify-between border-b pb-2 border-gray-300">
-          <div className="flex items-center gap-3">
-            <Calendar className="w-5 h-5 text-gray-400" strokeWidth={1.5} />
-            <span className="text-gray-600 text-lg">Duration</span>
+        <div className="flex items-center justify-between border-b pb-2 border-gray-200">
+          <div className="flex items-center gap-2">
+            <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400" strokeWidth={1.5} />
+            <span className="text-xs sm:text-sm text-gray-600 font-medium">Duration</span>
           </div>
-          <span className="text-gray-900 text-lg font-semibold">
-            {duration}
-          </span>
+          <span className="text-xs sm:text-sm text-gray-900 font-semibold">{duration}</span>
         </div>
 
         {/* Data */}
-        <div className="flex items-center justify-between border-b pb-2 border-gray-300">
-          <div className="flex items-center gap-3">
-            <Smartphone className="w-5 h-5 text-gray-400" strokeWidth={1.5} />
-            <span className="text-gray-600 text-lg">Data</span>
+        <div className="flex items-center justify-between border-b pb-2 border-gray-200">
+          <div className="flex items-center gap-2">
+            <Smartphone className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400" strokeWidth={1.5} />
+            <span className="text-xs sm:text-sm text-gray-600 font-medium">Data</span>
           </div>
-          <span className="text-gray-900 text-lg font-semibold">{data}</span>
+          <span className="text-xs sm:text-sm text-gray-900 font-semibold">{data}</span>
         </div>
 
         {/* Price */}
-        <div className="flex items-center justify-between border-b pb-2 border-gray-300">
-          <div className="flex items-center gap-3">
-            <Layers className="w-5 h-5 text-gray-400" strokeWidth={1.5} />
-            <span className="text-gray-600 text-lg">Price</span>
+        <div className="flex items-center justify-between border-b pb-2 border-gray-200">
+          <div className="flex items-center gap-2">
+            <Layers className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400" strokeWidth={1.5} />
+            <span className="text-xs sm:text-sm text-gray-600 font-medium">Price</span>
           </div>
           <div className="text-right">
-            <span className="text-gray-500 text-lg">USD </span>
-            <span className="text-gray-400 line-through text-lg">
-              {originalPrice}
-            </span>
-            <span className="text-gray-900 text-lg font-semibold ml-1">
-              {discountedPrice}
-            </span>
+            <span className="text-xs sm:text-sm text-gray-500">USD </span>
+            <span className="text-xs sm:text-sm text-gray-400 line-through">{originalPrice}</span>
+            <span className="text-xs sm:text-sm text-gray-900 font-semibold ml-1">${discountedPrice}</span>
           </div>
         </div>
       </div>

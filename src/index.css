@@ -10,8 +10,8 @@
 }
 
 .btn-primary {
-  @apply rounded-full text-white font-medium bg-gradient-to-b from-[#FFA943] to-[#E97400] w-full hover:scale-105 py-2 px-6 text-lg mt-8 transition-transform duration-300 shadow-lg cursor-pointer;
+  @apply rounded-full text-white font-medium bg-gradient-to-b from-[#FFA943] to-[#E97400] w-full hover:scale-105 md:py-2 py-1 px-6 md:text-lg md:mt-6 mt-3 transition-transform duration-300 shadow-lg cursor-pointer;
 }
 .saleBadge {
-  @apply bg-gradient-to-b from-[#FFA943] to-[#E97400] text-white px-4 py-1.5 rounded-full text-sm font-medium;
+  @apply bg-gradient-to-b from-[#FFA943] to-[#E97400] text-white px-4 md:py-1.5 py-1 rounded-full text-xs md:font-medium;
 }
